@@ -1,8 +1,8 @@
 import path from 'path';
 import helmet from 'helmet';
 import { Store } from 'express-session';
-import { configure, Plan } from "@dwp/govuk-casa";
 import express, { Request, Response } from 'express';
+import { configure, Plan, waypointUrl } from "@dwp/govuk-casa";
 
 const app = (
   name: string,
@@ -19,6 +19,8 @@ const app = (
 
   const plan = new Plan();
 
+  plan.addSequence('address-input', 'select-address', 'confirm-address', waypointUrl({ waypoint: 'sign-in' }));
+
   const { mount, ancillaryRouter } = configure({
     views: [viewDir],
     i18n: {
@@ -34,8 +36,16 @@ const app = (
     },
     pages: [
       {
-        waypoint: 'start',
-        view: 'pages/start.njk'
+        waypoint: 'address-input',
+        view: 'pages/address-input.njk'
+      },
+      {
+        waypoint: 'select-address',
+        view: 'pages/select-address.njk'
+      },
+      {
+        waypoint: 'confirm-address',
+        view: 'pages/confirm-address.njk'
       }
     ],
     plan

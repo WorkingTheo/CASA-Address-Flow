@@ -1,0 +1,53 @@
+{% extends "layouts/journey.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block journey_form %}
+
+  <div class="govuk-width-container">
+
+  <p>6 addresses found for <b>wr11nl</b> and <b>1</b>. <a href="#">Search again</a></p>
+
+  {{ govukRadios({
+  name: "select-an-address",
+  fieldset: {
+  legend: {
+  text: "Select an address",
+  isPageHeading: true,
+  classes: "govuk-fieldset__legend--l"
+  }
+  },
+  items: [
+  {
+  value: "1 Washington Street, Worcester, WR1 1NL",
+  text: "1 Washington Street, Worcester, WR1 1NL"
+  },
+  {
+  value: "10 Washington Street, Worcester, WR1 1NL",
+  text: "10 Washington Street, Worcester, WR1 1NL"
+  },
+  {
+  value: "11 Washington Street, Worcester, WR1 1NL",
+  text: "11 Washington Street, Worcester, WR1 1NL"
+  },
+  {
+  value: "101 Washington Street, Worcester, WR1 1NL",
+  text: "101 Washington Street, Worcester, WR1 1NL"
+  },
+  {
+  value: "110 Washington Street, Worcester, WR1 1NL",
+  text: "110 Washington Street, Worcester, WR1 1NL"
+  },
+  {
+  value: "111 Washington Street, Worcester, WR1 1NL",
+  text: "111 Washington Street, Worcester, WR1 1NL"
+  }
+  ]
+  }) }}
+
+  {{ govukButton({
+  text: "Use this address"
+  }) }}
+  <p class="govuk-body govuk-!-margin-bottom-0"><a href="#" class="govuk-link">Enter address manually</a></p>
+  </div> 
+{% endblock %}
