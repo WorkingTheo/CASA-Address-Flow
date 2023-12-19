@@ -1,6 +1,6 @@
 {% extends "layouts/journey.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "casa/components/radios/macro.njk" import casaGovukRadios with context %}
 
 {% block journey_form %}
 
@@ -8,12 +8,13 @@
 
   <p>6 addresses found for <b>wr11nl</b> and <b>1</b>. <a href="#">Search again</a></p>
 
-  {{ govukRadios({
+  {{ casaGovukRadios({
   name: "select-an-address",
   fieldset: {
   legend: {
   text: "Select an address",
   isPageHeading: true,
+  value: formData.address,
   classes: "govuk-fieldset__legend--l"
   }
   },
@@ -44,10 +45,4 @@
   }
   ]
   }) }}
-
-  {{ govukButton({
-  text: "Use this address"
-  }) }}
-  <p class="govuk-body govuk-!-margin-bottom-0"><a href="#" class="govuk-link">Enter address manually</a></p>
-  </div> 
 {% endblock %}

@@ -3,6 +3,8 @@ import helmet from 'helmet';
 import { Store } from 'express-session';
 import express, { Request, Response } from 'express';
 import { configure, Plan, waypointUrl } from "@dwp/govuk-casa";
+import addressInputFields from './definitions/fields/address-input-fields';
+import selectAddressFields from './definitions/fields/select-address-fields';
 
 const app = (
   name: string,
@@ -37,11 +39,13 @@ const app = (
     pages: [
       {
         waypoint: 'address-input',
-        view: 'pages/address-input.njk'
+        view: 'pages/address-input.njk',
+        fields: addressInputFields,
       },
       {
         waypoint: 'select-address',
-        view: 'pages/select-address.njk'
+        view: 'pages/select-address.njk',
+        fields: selectAddressFields
       },
       {
         waypoint: 'confirm-address',
