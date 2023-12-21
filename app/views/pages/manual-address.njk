@@ -4,37 +4,37 @@
 
 {% block journey_form %}
   <div class="govuk-width-container">
-    <h1 class="govuk-heading-l">Find an address</h1>
+    <h1 class="govuk-heading-l">Enter address manually</h1>
     <p class="govuk-body govuk-!-margin-bottom-0">
-      <a href="/sub/manual-address" class="govuk-link">Enter address manually</a>
+      <a href="/main/address-input" class="govuk-link">Find an address</a>
     </p>
-
-    {{ govukButton({
-      text: "Find address"
-    }) }}
 
     {{ casaGovukInput({
       label: {
-        text: "Building number or name"
+        text: "Address Line 1"
       },
       classes: "govuk-!-width-two-thirds",
-      hint: {
-        text: "For example, 15 or Prospect Cottage."
-      }, 
-      value: formData.searchString,
-      name: "searchString"
+      value: formData.addressLine1,
+      name: "addressLine1"
     }) }}
-
+  
+    {{ casaGovukInput({
+      label: {
+        text: "Town"
+      },
+      classes: "govuk-!-width-two-thirds",
+      value: formData.town,
+      name: "town"
+    }) }}
+    
     {{ casaGovukInput({
       label: {
         text: "Postcode"
       },
       classes: "govuk-!-width-two-thirds",
-      hint: {
-        text: "For example, AA3 1AB."
-      },
       value: formData.postcode,
       name: "postcode"
     }) }}
+
   </div>
 {% endblock %}

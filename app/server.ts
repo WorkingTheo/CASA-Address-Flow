@@ -5,7 +5,8 @@ import { noSniff } from 'helmet';
 import { AppConfig } from 'environment';
 import { MemoryStore } from 'express-session';
 
-import app from "./app";
+import autoFlowApp from "./auto-flow-app";
+import manualFlowApp from './manual-flow-app';
 
 const expressApp = express();
 expressApp.use(noSniff());
@@ -20,14 +21,15 @@ const name = appConfig.SESSION_ID;
 const secret = appConfig.SESSIONS_SECRET;
 const ttl = parseInt(appConfig.SESSIONS_TTL_SECONDS);
 const secure = appConfig.SECURE_COOKIES === 'true';
-const casaMountUrl = appConfig.CASA_MOUNT_URL;
 const port = parseInt(appConfig.SERVER_PORT);
 
 const sessionStore = new MemoryStore();
 
-const casaApp = app(name, secret, ttl, secure, sessionStore);
+const casaAutoFlow = autoFlowApp(name, secret, ttl, secure, sessionStore);
+const casaManualFlow = manualFlowApp(name, secret, ttl, secure, sessionStore);
 
-expressApp.use(casaMountUrl, casaApp);
+expressApp.use('/main', casaAutoFlow);
+expressApp.use('/sub', casaManualFlow);
 
 expressApp.listen(port, () => {
   console.log(`running on port: ${port}`);

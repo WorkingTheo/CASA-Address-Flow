@@ -7,8 +7,9 @@ import addressInputFields from './definitions/fields/address-input-fields';
 import selectAddressFields from './definitions/fields/select-address-fields';
 import { AddressInputType } from './types/address-input';
 import confirmAddressFields from './definitions/fields/confirm-address-fields';
+import manualAddressFields from './definitions/fields/manual-address-fields';
 
-const app = (
+const autoFlowApp = (
   name: string,
   secret: string,
   ttl: number,
@@ -42,6 +43,8 @@ const app = (
   });
   plan.addSequence('confirm-address', waypointUrl({ waypoint: 'start' }));
 
+  plan.addSequence('manual-address', 'confirm-address');
+
   const { mount, ancillaryRouter } = configure({
     views: [viewDir],
     i18n: {
@@ -65,38 +68,20 @@ const app = (
         waypoint: 'select-address',
         view: 'pages/select-address.njk',
         fields: selectAddressFields,
-        // hooks: [{
-        //   hook: 'postvalidate',
-        //   middleware: (req: Request, res: Response, next: NextFunction) => {
-        //     const journeyContext = JourneyContext.getDefaultContext(req.session);
-        //     const address = (journeyContext.getDataForPage('select-address') as AddressInputType).address.replace(",", "<br>");
-        //     console.log(`set address as: ${address}`);
-
-        //     journeyContext.setDataForPage('confirm-address', { address });
-        //     next();
-        //   },
-        // }],
       },
       {
         waypoint: 'confirm-address',
         view: 'pages/confirm-address.njk',
         fields: confirmAddressFields,
-        // hooks: [
-        //   {
-        //     hook: 'prerender',
-        //     middleware: (req: Request, res: Response, next: NextFunction) => {
-        //       const journeyContext = JourneyContext.getDefaultContext(req.session);
-        //       const data = journeyContext.getDataForPage('confirm-address');
-        //       console.log("confirm-address hook:");
-        //       console.log(data);
-        //       next();
-        //     }
-        //   }
-        // ]
       },
       {
         waypoint: 'empty-page', 
         view: 'pages/empty-page.njk'
+      },
+      {
+        waypoint: 'manual-address',
+        view: 'pages/manual-address.njk',
+        fields: manualAddressFields
       }
     ],
     plan
@@ -109,4 +94,4 @@ const app = (
   return mount(casaApp, {});
 }
 
-export default app;
+export default autoFlowApp;
